@@ -9,7 +9,7 @@ struct HTTPRequest {
     headers: HashMap<String, String>
 }
 
-fn parser(request_bytes: &[u8]) -> Result<HTTPRequest, String> {
+fn parser_as_string(request_bytes: &[u8]) -> Result<HTTPRequest, String> {
     let request_str = std::str::from_utf8(request_bytes).unwrap();
 
     let mut lines = request_str.split("\r\n");
@@ -53,7 +53,7 @@ Accept-Language: en, mi\r\n\
     // println!("{:#?}", bytes)                 // Prettify (print on new line)
     // println!("{:?}", bytes);
 
-    let test = parser(bytes);
+    let test = parser_as_string(bytes);
 
     // println!("{}", test);
 
