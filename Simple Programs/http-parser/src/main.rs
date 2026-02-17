@@ -1,12 +1,11 @@
 use std::collections::HashMap;
 
-#[derive(Debug)]
-#[derive(Clone)]
+#[derive(Debug, Clone)]
 struct HTTPRequest {
     method: String,
     route: String,
     version: String,
-    headers: HashMap<String, String>
+    headers: HashMap<String, String>,
 }
 
 fn parser_as_string(request_bytes: &[u8]) -> Result<HTTPRequest, String> {
@@ -26,9 +25,7 @@ fn parser_as_string(request_bytes: &[u8]) -> Result<HTTPRequest, String> {
     for line in lines {
         if line.is_empty() {
             break;
-        }
-
-        else {
+        } else {
             let (key, value) = line.split_once(": ").unwrap();
             header.insert(key.to_string(), value.to_string());
         }
@@ -38,7 +35,7 @@ fn parser_as_string(request_bytes: &[u8]) -> Result<HTTPRequest, String> {
         method,
         route,
         version,
-        headers: header
+        headers: header,
     })
 }
 
@@ -55,7 +52,7 @@ Accept-Language: en, mi\r\n\
 
     let test = parser_as_string(bytes);
 
-    // println!("{}", test);
+    // println!("{:?}", test);
 
     println!("Method: {:?}", test.clone().unwrap().method);
     println!("Route: {:?}", test.clone().unwrap().route);
