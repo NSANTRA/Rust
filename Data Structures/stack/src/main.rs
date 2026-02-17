@@ -81,18 +81,10 @@ fn main() {
             .expect("Please type a number!");
 
         match choice {
-            1 => {
-                push(&mut stack, &size);
-            },
-            2 => {
-                pop(&mut stack);
-            },
-            3 => {
-                peek(&mut stack);
-            },
-            4 => {
-                display(&stack);
-            },
+            1 => push(&mut stack, &size),
+            2 => pop(&mut stack),
+            3 => peek(&mut stack),
+            4 => display(&stack),
             5 => {
                 println!("Exiting...");
                 break;
