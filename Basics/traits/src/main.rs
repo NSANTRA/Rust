@@ -47,6 +47,10 @@ impl ModifyNumber for f64 {
     }
 }
 
+fn notify(item: &impl Summary) {
+    println!("Breaking news! {}", item.mention_author());
+}
+
 fn main() {
     let article = NewsArticle {
         headline: String::from("Headline"),
@@ -65,6 +69,8 @@ fn main() {
     };
 
     println!("Tweet: {}", tweet.summarize());
+
+    notify(&tweet);
 
     let num: f64 = 10.7;
 
