@@ -5,35 +5,18 @@ enum IpVersion {
 }
 
 fn main() {
-    let four = IpVersion::V4;
+    // let four = IpVersion::V4;
+    let four = IpVersion::V6;
     let six = IpVersion::V6;
-    let custom = IpVersion::V12;
-
-    match four {
-        IpVersion::V4 => {
-            println!("IP version V4");
-        },
-        IpVersion::V6 => {
-            println!("IP version V6");
-        },
-        _ => {
-            println!("IP version Other");
-        }
-    }
-
-    match six {
-        IpVersion::V4 => {
-            println!("IP version V4");
-        },
-        IpVersion::V6 => {
-            println!("IP version V6");
-        },
-        _ => {
-            println!("IP version Other");
-        }
-    }
+    let custom = IpVersion::V12(String::from("Hello"));
 
     if let IpVersion::V4 = four {
-        println!("IP version V4");
+        println!("IP V4");
+    } else if let IpVersion::V6 = six {
+        println!("IP V6");
+    } else if let IpVersion::V12(_string) = custom {
+        println!("IP V12");
+    } else {
+        println!("IP Invalid");
     }
 }
