@@ -64,7 +64,7 @@ where
     println!("{}", item.summarize());
 }
 
-fn return_traits(item: NewsArticle) -> impl Summary {
+fn return_traits(item: NewsArticle) -> impl Summary + Debug{
     item
 }
 
@@ -79,6 +79,7 @@ fn main() {
     println!("News Article: {}", article.summarize());
 
     println!("News Article 2: {}", return_traits(article).summarize());
+    // println!("News Article 2: {:#?}", return_traits(article));
     // return_traits(article).summarize();
 
     let tweet = Tweet {
