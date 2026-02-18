@@ -1,3 +1,5 @@
+use std::fmt::{Debug};
+
 // Trait (Interface) for custom data type
 pub trait Summary {
     fn mention_author(&self) -> String;
@@ -12,6 +14,7 @@ pub trait ModifyNumber {
 }
 
 // Custom data type
+#[derive(Debug)]
 pub struct NewsArticle {
     pub headline: String,
     pub location: String,
@@ -27,11 +30,12 @@ pub struct Tweet {
 }
 
 impl Summary for Tweet {
-    fn summarize(&self) -> String {
-        format!("{}: {}", self.mention_author(), self.content)
-    }
     fn mention_author(&self) -> String {
         format!("@{}", self.username)
+    }
+
+    fn summarize(&self) -> String {
+        format!("{}: {}", self.mention_author(), self.content)
     }
 }
 
@@ -47,8 +51,21 @@ impl ModifyNumber for f64 {
     }
 }
 
-fn notify(item: &impl Summary) {
-    println!("Breaking news! {}", item.mention_author());
+// fn notify(item: &impl Summary) {
+//     // Alternate way for trait bound is:
+//     // fn notify<T: Summary>(item: &T) {}
+//     println!("Breaking news! {}", item.mention_author());
+// }
+
+// Second alternative for trait bound syntax
+fn notify<T>(item: &T)
+where
+    T: Summary {
+    println!("{}", item.summarize());
+}
+
+fn return_traits(item: NewsArticle) -> impl Summary {
+    item
 }
 
 fn main() {
@@ -60,6 +77,9 @@ fn main() {
     };
 
     println!("News Article: {}", article.summarize());
+
+    println!("News Article 2: {}", return_traits(article).summarize());
+    // return_traits(article).summarize();
 
     let tweet = Tweet {
         username: String::from("Username"),
