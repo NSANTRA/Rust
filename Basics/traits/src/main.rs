@@ -1,6 +1,6 @@
 use std::fmt::{Debug};
 
-// Trait (Interface) for custom data type
+// Trait (Interface) for custom datatype
 pub trait Summary {
     fn mention_author(&self) -> String;
     fn summarize(&self) -> String {
@@ -13,7 +13,7 @@ pub trait ModifyNumber {
     fn modify_number(&self) -> usize;
 }
 
-// Custom data type
+// Custom datatype
 #[derive(Debug)]
 pub struct NewsArticle {
     pub headline: String,
