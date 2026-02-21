@@ -38,7 +38,7 @@ fn basics() {
         println!("Map_1 Key: {}, Map_1 Value: {}", k, v);
     }
 
-    for (k, v) in map.iter_mut() {
+    for (k, _) in map.iter_mut() {
         println!("Map_1 Key: {}, Map_1 Value (Changed): {}", k, String::from("Changed value"));
     }
 
