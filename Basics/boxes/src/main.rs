@@ -43,4 +43,5 @@ fn main() {
     println!("Stack Rectangle occupies: {} bytes", size_of_val(&rectangle));
     println!("Heap Point occupies: {} bytes", size_of_val(&boxed_point));
     println!("Heap Rectangle occupies: {} bytes", size_of_val(&boxed_rectangle));
+    println!("Unboxed Rectangle occupies: {} bytes", size_of_val(&*boxed_rectangle));
 }
