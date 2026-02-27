@@ -22,6 +22,29 @@ fn display(result: Result<usize, ParseIntError>) {
     }
 }
 
+type ParseResult<T> = Result<T, ParseIntError>;
+
+fn addition(first: &str, second: &str) -> ParseResult<usize> {
+    match first.trim().parse::<usize>() {
+        Ok(first) => match second.trim().parse::<usize>() {
+            Ok(second) => Ok(first + second),
+            Err(err) => Err(err),
+        },
+        Err(err) => Err(err),
+    }
+}
+
+fn display_alias(result: ParseResult<usize>) {
+    match result {
+        Ok(number) => {
+            println!("The addition of the given 2 numbers are: {number}");
+        }
+        Err(err) => {
+            println!("Error encountered while addition: {err}");
+        }
+    }
+}
+
 fn main() {
     let mut first: String = String::new();
     print!("Enter the first number: ");
@@ -34,6 +57,8 @@ fn main() {
     let _ = stdin().read_line(&mut second);
 
     let result = multiply(&first, &second);
-
     display(result);
+
+    let result = addition(&first, &second);
+    display_alias(result);
 }
