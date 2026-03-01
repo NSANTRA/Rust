@@ -28,7 +28,7 @@ fn input_validation<T: FromStr>(num: String) -> Result<T, T::Err> {
     }
 }
 
-fn main() {
+fn size_input() -> String {
     let mut num: String = String::new();
     print!("Enter the maximum number of elements: ");
     stdout().flush().unwrap();
@@ -37,29 +37,38 @@ fn main() {
         .read_line(&mut num)
         .expect("Failed to read the line");
 
+    num
+}
+
+fn value_input(num: usize, arr: &mut Vec<isize>) {
+    for _ in 0..num {
+        let mut input: String = String::new();
+        print!("Enter the element value: ");
+        stdout().flush().unwrap();
+
+        let _ = stdin()
+            .read_line(&mut input)
+            .expect("Failed to read the line");
+
+        match input_validation::<isize>(input) {
+            Ok(input) => {
+                arr.push(input);
+            }
+            Err(err) => {
+                println!("Please enter a valid integer: {err}");
+            }
+        }
+    }
+}
+
+fn main() {
+    let num: String = size_input();
     match input_validation::<usize>(num) {
         Ok(num) => {
             if num > 0 {
                 let mut arr: Vec<isize> = Vec::new();
 
-                for _ in 0..num {
-                    let mut input: String = String::new();
-                    print!("Enter the element value: ");
-                    stdout().flush().unwrap();
-
-                    let _ = stdin()
-                        .read_line(&mut input)
-                        .expect("Failed to read the line");
-
-                    match input_validation::<isize>(input) {
-                        Ok(input) => {
-                            arr.push(input);
-                        }
-                        Err(err) => {
-                            println!("Please enter a valid integer: {err}");
-                        }
-                    }
-                }
+                value_input(num, &mut arr);
 
                 display(&arr, &"Before");
                 sort(&mut arr);
