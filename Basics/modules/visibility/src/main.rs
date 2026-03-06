@@ -1,3 +1,6 @@
+use crate::struct_mod::{OpenBox, CloseBox};
+use crate::custom_mod::public_func as other_func;
+
 mod struct_mod {
     pub struct OpenBox {
         pub content: String,
@@ -80,6 +83,11 @@ fn main() {
 
     custom_mod::public_func();
 
+    {
+        println!("Called custom_mod::public_func named as other_func");
+        other_func();
+    }
+
     custom_mod::indirect_func();
 
     custom_mod::nested::public_func();
@@ -88,12 +96,12 @@ fn main() {
 
     custom_mod::public_function_in_crate();
 
-    let open_box: struct_mod::OpenBox = struct_mod::OpenBox {
+    let open_box: OpenBox = OpenBox {
         content: String::from("Open Box"),
     };
 
     println!("Contents of open_box: {}", open_box.content);
 
     #[allow(unused_variables)]
-    let close_box = struct_mod::CloseBox::new(String::from("Close Box"));
+    let close_box = CloseBox::new(String::from("Close Box"));
 }
