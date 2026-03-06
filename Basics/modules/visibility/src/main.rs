@@ -17,6 +17,7 @@ mod custom_mod {
             println!("Called public of custom_mod::nested::public_func");
         }
         
+        #[allow(dead_code)]
         fn private_func() {
             println!("Called custom_mod::nested::private_func");
         }
@@ -42,10 +43,12 @@ mod custom_mod {
     }
 
     mod private_nested {
+        #[allow(dead_code)]
         pub fn function() {
             println!("Called custom_mod::private_nested");
         }
 
+        #[allow(dead_code)]
         pub (crate) fn restricted_function() {
             println!("Called custom_mod::private_nested::restricted_function");
         }
