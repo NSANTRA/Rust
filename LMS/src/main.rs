@@ -7,7 +7,7 @@ use std::{io::{stdout, stdin, Write}, str::FromStr};
 use uuid::Uuid;
 use models::{books::Books, users::Users};
 use database::database_client::initialize;
-use utils::user_utils;
+use utils::{user_utils, book_utils};
 
 fn main() {
     let mut database_client: Client = initialize().expect("Error connecting to database");
