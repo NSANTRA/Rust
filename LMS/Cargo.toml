@@ -11,3 +11,4 @@ native-tls = "0.2.18"
 postgres-native-tls = "0.5.2"
 sqlx = { version = "0.8", features = ["runtime-tokio", "postgres", "uuid"] }
 tokio = { version = "1.50.0", features = ["full"] }
+chrono = "0.4.44"

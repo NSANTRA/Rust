@@ -105,7 +105,7 @@ impl BooksRepository {
 
         for _ in 0..request.copies {
             let _: PgQueryResult =
-                query("INSERT INTO book_inventory (book_id, status) VALUES ($1, $2)")
+                query("INSERT INTO book_inventory (book_id, status) VALUES ($1, $2::book_status)")
                     .bind(&book_id)
                     .bind("available")
                     .execute(&mut *transaction)

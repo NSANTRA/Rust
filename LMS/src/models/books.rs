@@ -31,7 +31,7 @@ pub struct SearchBookRequest {
     pub genre: Option<String>,
 }
 
-#[derive(Debug)]
+#[derive(Debug, Clone)]
 #[allow(dead_code)]
 pub struct BookResponse {
     pub book_id: Uuid,
