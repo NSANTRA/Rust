@@ -6,6 +6,5 @@ pub struct Books {
     pub description: Option<String>,
     pub genre: Vec<String>,
     pub author: String,
-    pub publisher: String
+    pub publisher: Option<String>,
 }
-
