@@ -1,20 +1,21 @@
-use postgres::{Client, Error, NoTls};
+use sqlx::{PgPool, Error};
 use std::env::var;
 use dotenv::dotenv;
 
-pub fn initialize() -> Result<Client, Error> {
+pub async fn initialize() -> Result<PgPool, Error> {
     dotenv().ok();
 
     let host = var("SUPABASE_HOST").unwrap();
     let password = var("SUPABASE_PASSWORD").unwrap();
     let project_ref = var("SUPABASE_PROJECT_ID").unwrap();
+    let port = var("SUPABASE_PORT").unwrap();
 
     let conn = format!(
-        "host = {} user = postgres.{} password = {} port = 6543 dbname = postgres",
-        host, project_ref, password
+        "postgresql://postgres.{}:{}@{}:{}/postgres",
+        project_ref, password, host, port
     );
 
-    let client = Client::connect(&conn, NoTls)?;
+    let client = PgPool::connect(&conn).await?;
 
     println!("Supabase Connected!");
 

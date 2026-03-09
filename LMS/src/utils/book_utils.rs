@@ -1,25 +1,30 @@
 use crate::models::books::Books;
-use postgres::{Client, Error};
 use uuid::Uuid;
+use sqlx::{PgPool, Error, query};
 
-pub fn delete(book_id: &Uuid, database_client: &mut Client) -> Result<bool, Error> {
-    let rows = database_client.execute(
-        "DELETE FROM books WHERE book_id = $1",
-        &[&book_id]
-    )?;
+pub async fn delete(book_id: &Uuid, database_client: &PgPool) -> Result<bool, Error> {
+    let rows = query("DELETE FROM books WHERE id = $1")
+        .bind(&book_id)
+        .execute(database_client)
+        .await?;
 
-    Ok(rows == 1)
+    Ok(rows.rows_affected() == 1)
 }
 
-pub fn insert(new_book: &Books, database_client: &mut Client) -> Result<bool, Error> {
-    let rows = database_client.execute(
-        "INSERT INTO users VALUES ($1, $2, $3, $4, $5, $6)",
-        &[&new_book.book_id,
-            &new_book.title,
-            &new_book.description,
-            &new_book.genre,
-            &new_book.publisher]
-    )?;
+pub async fn insert(new_book: &Books, database_client: &PgPool) -> Result<bool, Error> {
 
-    Ok(rows == 1)
+    let rows = query(
+        "INSERT INTO books (book_id, title, description, genre, author, publisher)
+         VALUES ($1,$2,$3,$4,$5,$6)"
+    )
+        .bind(&new_book.book_id)
+        .bind(&new_book.title)
+        .bind(&new_book.description)
+        .bind(&new_book.genre)
+        .bind(&new_book.author)
+        .bind(&new_book.publisher)
+        .execute(database_client)
+        .await?;
+
+    Ok(rows.rows_affected() == 1)
 }

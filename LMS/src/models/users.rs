@@ -3,7 +3,7 @@
 pub struct Users {
     pub user_id: uuid::Uuid,
     pub first_name: String,
-    pub middle_name: String,
+    pub middle_name: Option<String>,
     pub last_name: String,
     pub age: i32,
     pub email: String
