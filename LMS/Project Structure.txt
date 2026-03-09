@@ -1,0 +1,43 @@
+src
+├── main.rs
+├── config
+│   └── mod.rs
+│
+├── database
+│   ├── database_client.rs
+│   └── mod.rs
+│
+├── models      # Structures
+│   ├── authors.rs
+│   ├── books.rs
+│   ├── genres.rs
+│   ├── loans.rs
+│   ├── publishers.rs
+│   ├── users.rs
+│   └── mod.rs
+│
+├── repositories        # Raw database queries
+│   ├── books_repository.rs
+│   ├── users_repository.rs
+│   ├── loans_repository.rs
+│   └── mod.rs
+│
+├── services            # Business logics
+│   ├── book_service.rs
+│   ├── loan_service.rs
+│   ├── user_service.rs
+│   └── mod.rs
+│
+├── handlers
+│   ├── book_handler.rs
+│   ├── loan_handler.rs
+│   ├── user_handler.rs
+│   └── mod.rs
+│
+├── utils
+│   ├── book_utils.rs
+│   ├── user_utils.rs
+│   └── mod.rs
+│
+└── errors
+    └── mod.rs
