@@ -13,7 +13,7 @@ pub struct Author {
 #[allow(dead_code)]
 pub struct CreateAuthorRequest {
     pub first_name: String,
-    pub middle_name: Option<String>,
+    pub middle_name: String,
     pub last_name: String
 }
 
@@ -30,6 +30,6 @@ pub struct SearchAuthorRequest {
 pub struct SearchAuthorResponse {
     pub author_id: Uuid,
     pub first_name: String,
-    pub middle_name: Option<String>,
+    pub middle_name: String,
     pub last_name: String
 }

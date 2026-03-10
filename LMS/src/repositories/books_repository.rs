@@ -32,28 +32,16 @@ impl BooksRepository {
         for author in &request.authors {
             let parts: Vec<&str> = author.split_whitespace().collect();
 
-            let mut first_name: &str = "";
-            let mut middle_name: Option<String> = None;
-            let mut last_name: &str = "";
-
-            match parts.len() {
-                0 => continue,
-                1 => {
-                    first_name = parts[0];
-                    middle_name = None;
-                    last_name = "";
-                }
-                2 => {
-                    first_name = parts[0];
-                    middle_name = None;
-                    last_name = parts[1];
-                }
-                _ => {
-                    first_name = parts[0];
-                    middle_name = Some(parts[1..parts.len() - 1].join(" "));
-                    last_name = parts[parts.len() - 1];
-                }
-            }
+            let (first_name, middle_name, last_name) = match parts.len() {
+                    0 => continue,
+                    1 => (parts[0], String::new(), ""),
+                    2 => (parts[0], String::new(), parts[1]),
+                    _ => (
+                        parts[0],
+                        parts[1..parts.len() - 1].join(" "),
+                        parts[parts.len() - 1],
+                    ),
+                };
 
             let row: PgRow = query(
                 "INSERT INTO authors (first_name, middle_name, last_name) VALUES ($1, $2, $3) ON CONFLICT (first_name, middle_name, last_name) DO UPDATE SET first_name = authors.first_name RETURNING author_id",
