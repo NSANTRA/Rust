@@ -1,5 +1,6 @@
+use sqlx::{PgPool};
 use crate::models::books::{BookResponse, CreateBookRequest};
-use sqlx::{Error, PgPool};
+use crate::models::custom_error::RepositoryError;
 use crate::repositories::book_utilities::create_book::create_book;
 
 pub struct BooksRepository {
@@ -11,7 +12,7 @@ impl BooksRepository {
         BooksRepository { database_client }
     }
 
-    pub async fn create_book(self: &BooksRepository, create_book_request: &CreateBookRequest) -> Result<BookResponse, Error> {
+    pub async fn create_book(self: &BooksRepository, create_book_request: &CreateBookRequest) -> Result<BookResponse, RepositoryError> {
         create_book(self, &create_book_request).await
     }
 }

@@ -1,14 +1,13 @@
-use sqlx::{query, Error, Row};
-use sqlx::postgres::{PgQueryResult, PgRow};
-use uuid::Uuid;
-use crate::models::books::{BookResponse, CreateBookRequest};
+use crate::models::{
+    books::{BookResponse, CreateBookRequest},
+    custom_error::RepositoryError
+};
 use crate::repositories::books_repository::BooksRepository;
+use sqlx::{Row, postgres::{PgQueryResult, PgRow}, query, Transaction, Postgres};
+use uuid::Uuid;
 
-pub async fn create_book(
-    book_repo: &BooksRepository,
-    request: &CreateBookRequest,
-) -> Result<BookResponse, Error> {
-    let mut transaction = book_repo.database_client.begin().await?;
+pub async fn create_book(book_repo: &BooksRepository, request: &CreateBookRequest) -> Result<BookResponse, RepositoryError> {
+    let mut transaction: Transaction<Postgres> = book_repo.database_client.begin().await?;
 
     let row: PgRow = query("INSERT INTO publishers (name) VALUES ($1) ON CONFLICT (name) DO UPDATE SET NAME = publishers.name RETURNING publisher_id")
         .bind(&request.publisher_name)
@@ -56,14 +55,17 @@ pub async fn create_book(
         genre_ids.push(row.get("genre_id"));
     }
 
-    let row: PgRow = query("INSERT INTO books (title, description, publisher_id) VALUES ($1, $2, $3) RETURNING book_id")
+    let row: Option<PgRow> = query("INSERT INTO books (title, description, publisher_id) VALUES ($1, $2, $3) ON CONFLICT (title) DO NOTHING RETURNING book_id")
         .bind(&request.title)
         .bind(&request.description)
         .bind(&publisher_id)
-        .fetch_one(&mut *transaction)
+        .fetch_optional(&mut *transaction)
         .await?;
 
-    let book_id: Uuid = row.get("book_id");
+    let book_id = match row {
+        Some(row) => row.get("book_id"),
+        None => return Err(RepositoryError::AlreadyExists)
+    };
 
     for author_id in &author_ids {
         let _: PgQueryResult =
@@ -75,12 +77,11 @@ pub async fn create_book(
     }
 
     for genre_id in &genre_ids {
-        let _: PgQueryResult =
-            query("INSERT INTO book_genres (book_id, genre_id) VALUES ($1, $2)")
-                .bind(&book_id)
-                .bind(&genre_id)
-                .execute(&mut *transaction)
-                .await?;
+        let _: PgQueryResult = query("INSERT INTO book_genres (book_id, genre_id) VALUES ($1, $2)")
+            .bind(&book_id)
+            .bind(&genre_id)
+            .execute(&mut *transaction)
+            .await?;
     }
 
     for _ in 0..request.copies {

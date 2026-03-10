@@ -1,20 +1,25 @@
 use sqlx::PgPool;
-use crate::models::books::BookResponse;
 
 pub mod database;
 pub mod repositories;
 
 pub mod models;
 
+use models::{
+    custom_error::RepositoryError,
+    books::CreateBookRequest
+};
+use crate::repositories::books_repository::BooksRepository;
+
 #[tokio::main]
 async fn main() {
     let database_client: PgPool = database::database_client::initialize().await.unwrap();
 
-    let book_repository = repositories::books_repository::BooksRepository::new(database_client.clone());
+    let book_repository: BooksRepository = BooksRepository::new(database_client.clone());
 
     println!("Repository initialized");
     
-    let request: models::books::CreateBookRequest = models::books::CreateBookRequest{
+    let request: CreateBookRequest = CreateBookRequest{
         title: String::from("Percy Jackson"),
         description: None,
         authors: Vec::from([String::from("Rick Riordan"), String::from("J.K Rowling")]),
@@ -23,7 +28,15 @@ async fn main() {
         copies: 10
     };
     
-    let res: BookResponse = book_repository.create_book(&request).await.unwrap();
-    
-    println!("Created book: {:?}", res.clone());
+    match book_repository.create_book(&request).await {
+        Ok(book) => {
+            println!("Created book: {:#?}", book);
+        }
+        Err(RepositoryError::AlreadyExists) => {
+            println!("Row already exists");
+        }
+        Err(RepositoryError::Database(err)) => {
+            println!("Database error: {:#?}", err);
+        }
+    }
 }
