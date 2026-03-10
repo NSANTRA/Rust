@@ -35,10 +35,10 @@ pub struct SearchUserRequest {
 #[derive(Debug)]
 #[allow(dead_code)]
 // Admin User Search Response
-pub struct SearchUserResponse {
+pub struct UserResponse {
     pub user_id: Uuid,
     pub first_name: String,
-    pub middle_name: Option<String>,
+    pub middle_name: String,
     pub last_name: String,
     pub email: String
 }

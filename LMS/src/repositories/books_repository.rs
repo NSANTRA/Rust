@@ -13,6 +13,6 @@ impl BooksRepository {
     }
 
     pub async fn create_book(self: &BooksRepository, create_book_request: &CreateBookRequest) -> Result<BookResponse, RepositoryError> {
-        create_book(self, &create_book_request).await
+        create_book(self, create_book_request).await
     }
 }

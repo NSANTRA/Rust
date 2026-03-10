@@ -9,13 +9,18 @@ use models::{
     custom_error::RepositoryError,
     books::CreateBookRequest
 };
-use crate::repositories::books_repository::BooksRepository;
+use crate::models::users::CreateUserRequest;
+use crate::repositories::{
+    books_repository::BooksRepository,
+    users_repository::UserRepository
+};
 
 #[tokio::main]
 async fn main() {
     let database_client: PgPool = database::database_client::initialize().await.unwrap();
 
     let book_repository: BooksRepository = BooksRepository::new(database_client.clone());
+    let user_repository: UserRepository = UserRepository::new(database_client.clone());
 
     println!("Repository initialized");
     
@@ -31,6 +36,25 @@ async fn main() {
     match book_repository.create_book(&request).await {
         Ok(book) => {
             println!("Created book: {:#?}", book);
+        }
+        Err(RepositoryError::AlreadyExists) => {
+            println!("Row already exists");
+        }
+        Err(RepositoryError::Database(err)) => {
+            println!("Database error: {:#?}", err);
+        }
+    }
+
+    let request: CreateUserRequest = CreateUserRequest {
+        first_name: String::from("Neelotpal"),
+        middle_name: None,
+        last_name: String::from("Santra"),
+        email: String::from("ns@test.com")
+    };
+
+    match user_repository.create_user(&request).await {
+        Ok(user) => {
+            println!("Created user: {:#?}", user);
         }
         Err(RepositoryError::AlreadyExists) => {
             println!("Row already exists");
