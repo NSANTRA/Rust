@@ -1,7 +1,8 @@
 use chrono::NaiveDateTime;
 use uuid::Uuid;
+use serde::{Serialize, Deserialize};
 
-#[derive(Debug)]
+#[derive(Debug, Serialize, Deserialize)]
 #[allow(dead_code)]
 pub struct User {
     pub user_id: Uuid,
@@ -12,7 +13,7 @@ pub struct User {
     pub created_at: NaiveDateTime,
 }
 
-#[derive(Debug)]
+#[derive(Debug, Serialize, Deserialize)]
 #[allow(dead_code)]
 // User Signup
 pub struct CreateUserRequest {
@@ -22,7 +23,7 @@ pub struct CreateUserRequest {
     pub email: String
 }
 
-#[derive(Debug)]
+#[derive(Debug, Serialize, Deserialize)]
 #[allow(dead_code)]
 // Admin User Search
 pub struct SearchUserRequest {
@@ -32,7 +33,7 @@ pub struct SearchUserRequest {
     pub email: Option<String>
 }
 
-#[derive(Debug)]
+#[derive(Debug, Serialize, Deserialize)]
 #[allow(dead_code)]
 // Admin User Search Response
 pub struct UserResponse {

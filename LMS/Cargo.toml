@@ -6,9 +6,11 @@ edition = "2024"
 [dependencies]
 dotenv = "0.15.0"
 postgres = { version = "0.19.12", features = ["with-uuid-1"] }
-uuid = {version = "1.22.0", features = ["v4"]}
+uuid = {version = "1.22.0", features = ["v4", "serde"]}
 native-tls = "0.2.18"
 postgres-native-tls = "0.5.2"
 sqlx = { version = "0.8", features = ["runtime-tokio", "postgres", "uuid"] }
 tokio = { version = "1.50.0", features = ["full"] }
-chrono = "0.4.44"
+chrono = { version = "0.4.44", features = ["serde"] }
+actix-web = "4.13.0"
+serde = { version = "1.0.228", features = ["derive"] }

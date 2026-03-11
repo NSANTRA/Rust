@@ -3,6 +3,7 @@ use crate::models::users::{UserResponse, CreateUserRequest};
 use crate::models::custom_error::RepositoryError;
 use crate::repositories::user_utilities::create_user::create_user;
 
+#[derive(Clone)]
 pub struct UserRepository {
     pub database_client: PgPool,
 }
