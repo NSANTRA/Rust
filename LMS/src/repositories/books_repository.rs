@@ -3,6 +3,7 @@ use crate::models::books::{BookResponse, CreateBookRequest};
 use crate::models::custom_error::RepositoryError;
 use crate::repositories::book_utilities::create_book::create_book;
 
+#[derive(Clone)]
 pub struct BooksRepository {
     pub database_client: PgPool,
 }

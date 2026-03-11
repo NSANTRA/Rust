@@ -1,6 +1,7 @@
+use serde::{Deserialize, Serialize};
 use uuid::Uuid;
 
-#[derive(Debug)]
+#[derive(Debug, Serialize, Deserialize)]
 #[allow(dead_code)]
 pub struct Book {
     pub book_id: Uuid,
@@ -9,7 +10,7 @@ pub struct Book {
     pub publisher_id: Option<Uuid>,
 }
 
-#[derive(Debug)]
+#[derive(Debug, Serialize, Deserialize)]
 #[allow(dead_code)]
 // Admin book creation
 pub struct CreateBookRequest {
@@ -21,7 +22,7 @@ pub struct CreateBookRequest {
     pub copies: i32
 }
 
-#[derive(Debug)]
+#[derive(Debug, Serialize, Deserialize)]
 #[allow(dead_code)]
 // Admin book creation
 pub struct SearchBookRequest {
@@ -31,7 +32,7 @@ pub struct SearchBookRequest {
     pub genre: Option<String>,
 }
 
-#[derive(Debug, Clone)]
+#[derive(Debug, Clone, Serialize, Deserialize)]
 #[allow(dead_code)]
 pub struct BookResponse {
     pub book_id: Uuid,
