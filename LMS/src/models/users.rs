@@ -10,6 +10,7 @@ pub struct User {
     pub middle_name: Option<String>,
     pub last_name: String,
     pub email: String,
+    pub password: String,
     pub created_at: NaiveDateTime,
 }
 
@@ -20,7 +21,8 @@ pub struct CreateUserRequest {
     pub first_name: String,
     pub middle_name: Option<String>,
     pub last_name: String,
-    pub email: String
+    pub email: String,
+    pub password: String,
 }
 
 #[derive(Debug, Serialize, Deserialize)]

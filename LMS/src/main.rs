@@ -10,7 +10,8 @@ use handlers::{
     user_handler::create_user,
     books_handler::create_book,
 };
-use actix_web::{web::{Json, Data, post}, HttpServer, App};
+use actix_web::{web::{Data, post}, HttpServer, App};
+use actix_cors::Cors;
 use crate::repositories::{
     books_repository::BooksRepository,
     users_repository::UserRepository
@@ -27,10 +28,15 @@ async fn main() -> Result<(), std::io::Error> {
 
     HttpServer::new(move || {
         App::new()
+            .wrap(Cors::default()
+                .allow_any_origin()
+                .allow_any_method()
+                .allow_any_header()
+            )
             .app_data(Data::new(user_repository.clone()))
             .app_data(Data::new(book_repository.clone()))
-            .route("/create_user", post().to(create_user))
-            .route("/create_book", post().to(create_book))
+            .route("/create-user", post().to(create_user))
+            .route("/create-book", post().to(create_book))
     })
         .bind(("127.0.0.1", 8080))?
         .run()

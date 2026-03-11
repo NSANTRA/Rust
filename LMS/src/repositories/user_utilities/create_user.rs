@@ -12,11 +12,12 @@ pub async fn create_user(user_repo: &UserRepository, request: &CreateUserRequest
         None => "",
     };
 
-    let row: Option<PgRow> = query("INSERT INTO users (first_name, middle_name, last_name, email) VALUES ($1, $2, $3, $4) ON CONFLICT (email) DO NOTHING RETURNING user_id")
+    let row: Option<PgRow> = query("INSERT INTO users (first_name, middle_name, last_name, email, password) VALUES ($1, $2, $3, $4, $5) ON CONFLICT (email) DO NOTHING RETURNING user_id")
         .bind(&request.first_name)
         .bind(&middle_name)
         .bind(&request.last_name)
         .bind(&request.email)
+        .bind(&request.password)
         .fetch_optional(&mut *transaction)
         .await?;
 
