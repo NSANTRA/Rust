@@ -1,4 +1,4 @@
-use actix_web::{web::{Json, Data}, HttpResponse};
+use actix_web::{web::{Json, Data, Query}, HttpResponse};
 use crate::repositories::books_repository::BooksRepository;
 use crate::models::books::{CreateBookRequest, BookResponse, SearchBookRequest};
 use crate::models::custom_error::RepositoryError;
@@ -20,13 +20,13 @@ pub async fn create_book(repository: Data<BooksRepository>, request: Json<Create
             HttpResponse::Conflict().json("Book already exists")
         }
         Err(RepositoryError::Database(err)) => {
-            HttpResponse::Conflict().json(format!("Database error: {:?}", err.to_string()))
+            HttpResponse::InternalServerError().json(format!("Database error: {:?}", err.to_string()))
         }
     }
 }
 
-pub async fn list_books(repository: Data<BooksRepository>, request: Json<SearchBookRequest>) -> HttpResponse {
-    match repository.list_books(&request).await {
+pub async fn list_books(repository: Data<BooksRepository>, request: Query<SearchBookRequest>) -> HttpResponse {
+    match repository.list_books(&request.into_inner()).await {
         Ok(books) => {
             HttpResponse::Ok().json(books)
         }
@@ -34,7 +34,8 @@ pub async fn list_books(repository: Data<BooksRepository>, request: Json<SearchB
             HttpResponse::Conflict().json("Book already exists")
         }
         Err(RepositoryError::Database(err)) => {
-            HttpResponse::Conflict().json(format!("Database error: {:?}", err.to_string()))
+            HttpResponse::InternalServerError()
+                .json(format!("Database error: {}", err))
         }
     }
 }
