@@ -8,9 +8,9 @@ pub mod handlers;
 
 use handlers::{
     user_handler::create_user,
-    books_handler::create_book,
+    books_handler::{create_book, list_books},
 };
-use actix_web::{web::{Data, post}, HttpServer, App};
+use actix_web::{App, HttpServer, web::{Data, get, post}};
 use actix_cors::Cors;
 use crate::repositories::{
     books_repository::BooksRepository,
@@ -37,6 +37,7 @@ async fn main() -> Result<(), std::io::Error> {
             .app_data(Data::new(book_repository.clone()))
             .route("/create-user", post().to(create_user))
             .route("/create-book", post().to(create_book))
+            .route("/list-books", get().to(list_books))
     })
         .bind(("127.0.0.1", 8080))?
         .run()

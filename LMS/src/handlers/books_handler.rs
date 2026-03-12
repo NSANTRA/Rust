@@ -1,6 +1,6 @@
 use actix_web::{web::{Json, Data}, HttpResponse};
 use crate::repositories::books_repository::BooksRepository;
-use crate::models::books::{CreateBookRequest, BookResponse};
+use crate::models::books::{CreateBookRequest, BookResponse, SearchBookRequest};
 use crate::models::custom_error::RepositoryError;
 
 pub async fn create_book(repository: Data<BooksRepository>, request: Json<CreateBookRequest>) -> HttpResponse {
@@ -15,6 +15,20 @@ pub async fn create_book(repository: Data<BooksRepository>, request: Json<Create
                 publisher_name: book.publisher_name,
                 available_copies: book.available_copies,
             })
+        }
+        Err(RepositoryError::AlreadyExists) => {
+            HttpResponse::Conflict().json("Book already exists")
+        }
+        Err(RepositoryError::Database(err)) => {
+            HttpResponse::Conflict().json(format!("Database error: {:?}", err.to_string()))
+        }
+    }
+}
+
+pub async fn list_books(repository: Data<BooksRepository>, request: Json<SearchBookRequest>) -> HttpResponse {
+    match repository.list_books(&request).await {
+        Ok(books) => {
+            HttpResponse::Ok().json(books)
         }
         Err(RepositoryError::AlreadyExists) => {
             HttpResponse::Conflict().json("Book already exists")

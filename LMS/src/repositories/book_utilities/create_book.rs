@@ -54,10 +54,15 @@ pub async fn create_book(book_repo: &BooksRepository, request: &CreateBookReques
 
         genre_ids.push(row.get("genre_id"));
     }
+    
+    let description = match request.description.clone() {
+        Some(desc) => desc,
+        None => String::new(),
+    };
 
     let row: Option<PgRow> = query("INSERT INTO books (title, description, publisher_id) VALUES ($1, $2, $3) ON CONFLICT (title) DO NOTHING RETURNING book_id")
         .bind(&request.title)
-        .bind(&request.description)
+        .bind(&description)
         .bind(&publisher_id)
         .fetch_optional(&mut *transaction)
         .await?;
@@ -94,11 +99,11 @@ pub async fn create_book(book_repo: &BooksRepository, request: &CreateBookReques
     }
 
     transaction.commit().await?;
-
+    
     Ok(BookResponse {
         book_id,
         title: request.title.clone(),
-        description: request.description.clone(),
+        description: description,
         publisher_name: request.publisher_name.clone(),
         authors: request.authors.clone(),
         genres: request.genres.clone(),

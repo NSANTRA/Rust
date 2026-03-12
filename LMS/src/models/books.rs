@@ -1,13 +1,14 @@
 use serde::{Deserialize, Serialize};
 use uuid::Uuid;
+use sqlx::FromRow;
 
 #[derive(Debug, Serialize, Deserialize)]
 #[allow(dead_code)]
 pub struct Book {
     pub book_id: Uuid,
     pub title: String,
-    pub description: Option<String>,
-    pub publisher_id: Option<Uuid>,
+    pub description: String,
+    pub publisher_id: Uuid,
 }
 
 #[derive(Debug, Serialize, Deserialize)]
@@ -32,12 +33,12 @@ pub struct SearchBookRequest {
     pub genre: Option<String>,
 }
 
-#[derive(Debug, Clone, Serialize, Deserialize)]
+#[derive(Debug, Clone, Serialize, Deserialize, FromRow)]
 #[allow(dead_code)]
 pub struct BookResponse {
     pub book_id: Uuid,
     pub title: String,
-    pub description: Option<String>,
+    pub description: String,
     pub publisher_name: String,
     pub authors: Vec<String>,
     pub genres: Vec<String>,

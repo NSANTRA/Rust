@@ -1,0 +1,58 @@
+{
+  "db_name": "PostgreSQL",
+  "query": "\n            SELECT \n                b.book_id,\n                b.title,\n                b.description,\n                p.name AS publisher_name,\n                ARRAY(\n                    SELECT a.first_name || ' ' || a.last_name\n                    FROM authors a\n                    JOIN book_authors ba ON ba.author_id = a.author_id\n                    WHERE ba.book_id = b.book_id\n                ) AS authors,\n                ARRAY(\n                    SELECT g.name\n                    FROM genres g\n                    JOIN book_genres bg ON bg.genre_id = g.genre_id\n                    WHERE bg.book_id = b.book_id\n                ) AS genres,\n                (\n                    SELECT COUNT(*) \n                    FROM book_inventory bi \n                    WHERE bi.book_id = b.book_id AND bi.status = 'available'\n                ) AS available_copies\n            FROM books b\n            JOIN publishers p ON p.publisher_id = b.publisher_id\n            WHERE b.title ILIKE '%' || $1 || '%'\n            ",
+  "describe": {
+    "columns": [
+      {
+        "ordinal": 0,
+        "name": "book_id",
+        "type_info": "Uuid"
+      },
+      {
+        "ordinal": 1,
+        "name": "title",
+        "type_info": "Text"
+      },
+      {
+        "ordinal": 2,
+        "name": "description",
+        "type_info": "Text"
+      },
+      {
+        "ordinal": 3,
+        "name": "publisher_name",
+        "type_info": "Text"
+      },
+      {
+        "ordinal": 4,
+        "name": "authors",
+        "type_info": "TextArray"
+      },
+      {
+        "ordinal": 5,
+        "name": "genres",
+        "type_info": "TextArray"
+      },
+      {
+        "ordinal": 6,
+        "name": "available_copies",
+        "type_info": "Int8"
+      }
+    ],
+    "parameters": {
+      "Left": [
+        "Text"
+      ]
+    },
+    "nullable": [
+      false,
+      false,
+      false,
+      false,
+      null,
+      null,
+      null
+    ]
+  },
+  "hash": "797206feaf1260d9bbf4884a8bfbb9e631aeb509431b281a527df5dd21dc0ae6"
+}
