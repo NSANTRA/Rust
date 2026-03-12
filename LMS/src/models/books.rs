@@ -25,7 +25,6 @@ pub struct CreateBookRequest {
 
 #[derive(Debug, Serialize, Deserialize)]
 #[allow(dead_code)]
-// Admin book creation
 pub struct SearchBookRequest {
     pub title: Option<String>,
     pub publisher_name: Option<String>,
