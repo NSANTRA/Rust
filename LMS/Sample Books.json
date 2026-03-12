@@ -1,0 +1,144 @@
+{
+  "books": [
+    {
+      "Book Title": "The Silent Horizon",
+      "Description": "A crew of astronauts discovers a mysterious signal from a distant planet that could change humanity forever.",
+      "Publisher Name": "NovaStar Publishing",
+      "Authors": "Arjun Mehta, Kavya Shah",
+      "Genres": "Science Fiction, Thriller"
+    },
+    {
+      "Book Title": "Whispers of the Monsoon",
+      "Description": "Two childhood friends reunite during the monsoon season and uncover hidden family secrets.",
+      "Publisher Name": "Blue River Press",
+      "Authors": "Riya Patel",
+      "Genres": "Romance, Drama"
+    },
+    {
+      "Book Title": "The Last Kingdom of Sand",
+      "Description": "A young warrior must unite desert tribes to defeat an ancient evil rising from forgotten ruins.",
+      "Publisher Name": "Golden Quill Books",
+      "Authors": "Dev Malhotra, Sneha Iyer",
+      "Genres": "Fantasy, Adventure"
+    },
+    {
+      "Book Title": "Code Beyond Limits",
+      "Description": "A guide for developers to master algorithms and build scalable systems.",
+      "Publisher Name": "TechForge Publishing",
+      "Authors": "Rahul Verma",
+      "Genres": "Technology, Programming"
+    },
+    {
+      "Book Title": "The Mindful Path",
+      "Description": "A practical guide to mindfulness techniques for reducing stress and improving daily life.",
+      "Publisher Name": "Harmony House",
+      "Authors": "Ananya Desai",
+      "Genres": "Self-Help, Psychology"
+    },
+    {
+      "Book Title": "Echoes of the Forgotten City",
+      "Description": "An archaeologist uncovers a lost civilization buried beneath a modern metropolis.",
+      "Publisher Name": "Heritage Books",
+      "Authors": "Nikhil Joshi",
+      "Genres": "Adventure, Historical Fiction"
+    },
+    {
+      "Book Title": "Digital Nomad Diaries",
+      "Description": "Stories and lessons from travelers building careers while exploring the world.",
+      "Publisher Name": "WanderWave Press",
+      "Authors": "Sonia Kapoor",
+      "Genres": "Travel, Memoir"
+    },
+    {
+      "Book Title": "The Quantum Enigma",
+      "Description": "A physicist races against time to stop a scientific breakthrough from becoming a global weapon.",
+      "Publisher Name": "FutureEdge Publishing",
+      "Authors": "Aditya Rao",
+      "Genres": "Science Fiction, Mystery"
+    },
+    {
+      "Book Title": "Shadows in the Alley",
+      "Description": "A detective navigates the dark underworld of crime to solve a series of mysterious disappearances.",
+      "Publisher Name": "Midnight Ink",
+      "Authors": "Karan Khanna",
+      "Genres": "Crime, Thriller"
+    },
+    {
+      "Book Title": "Gardens of Serenity",
+      "Description": "A beginner’s guide to creating peaceful gardens and reconnecting with nature.",
+      "Publisher Name": "GreenLeaf Publishing",
+      "Authors": "Meera Shah",
+      "Genres": "Lifestyle, Gardening"
+    },
+    {
+      "Book Title": "The Startup Blueprint",
+      "Description": "A practical roadmap for aspiring entrepreneurs to build and scale successful startups.",
+      "Publisher Name": "Innovate Press",
+      "Authors": "Vikram Sethi",
+      "Genres": "Business, Entrepreneurship"
+    },
+    {
+      "Book Title": "Moonlight Over Kyoto",
+      "Description": "A photographer finds love and purpose while documenting life in Kyoto.",
+      "Publisher Name": "Silver Lantern Books",
+      "Authors": "Aisha Khan",
+      "Genres": "Romance, Travel"
+    },
+    {
+      "Book Title": "AI Revolution",
+      "Description": "Exploring how artificial intelligence is transforming industries and society.",
+      "Publisher Name": "FutureTech Media",
+      "Authors": "Neeraj Gupta",
+      "Genres": "Technology, Artificial Intelligence"
+    },
+    {
+      "Book Title": "Legends of the Eastern Sea",
+      "Description": "Ancient myths come alive as a young sailor discovers magical creatures in uncharted waters.",
+      "Publisher Name": "Oceanic Tales",
+      "Authors": "Tara Nair",
+      "Genres": "Fantasy, Adventure"
+    },
+    {
+      "Book Title": "The Art of Slow Living",
+      "Description": "Lessons on slowing down and finding joy in everyday moments.",
+      "Publisher Name": "CalmMind Press",
+      "Authors": "Pooja Mehta",
+      "Genres": "Self-Help, Lifestyle"
+    },
+    {
+      "Book Title": "Hidden Patterns",
+      "Description": "A mathematician uncovers patterns that predict global economic crashes.",
+      "Publisher Name": "Insight Books",
+      "Authors": "Rohan Iyer",
+      "Genres": "Thriller, Mystery"
+    },
+    {
+      "Book Title": "The Himalayan Escape",
+      "Description": "A corporate executive leaves city life behind for a transformative journey in the mountains.",
+      "Publisher Name": "PeakView Publishing",
+      "Authors": "Kunal Sharma",
+      "Genres": "Adventure, Travel"
+    },
+    {
+      "Book Title": "Cooking with Tradition",
+      "Description": "Authentic recipes and stories from Indian kitchens passed through generations.",
+      "Publisher Name": "SpiceRoute Books",
+      "Authors": "Anita Kulkarni",
+      "Genres": "Cooking, Culture"
+    },
+    {
+      "Book Title": "The Time Collector",
+      "Description": "A man discovers a watch that allows him to collect and relive moments from the past.",
+      "Publisher Name": "Chronicle House",
+      "Authors": "Ishaan Kapoor",
+      "Genres": "Fantasy, Drama"
+    },
+    {
+      "Book Title": "Beyond the Finish Line",
+      "Description": "The inspiring journey of athletes overcoming adversity to achieve greatness.",
+      "Publisher Name": "Victory Press",
+      "Authors": "Siddharth Jain",
+      "Genres": "Sports, Biography"
+    }
+  ]
+}
