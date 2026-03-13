@@ -2,27 +2,15 @@ use actix_web::{web::{Json, Data}, HttpResponse};
 use crate::repositories::users_repository::UserRepository;
 use crate::models::users::{CreateUserRequest, UserResponse};
 use crate::models::custom_error::RepositoryError;
-use reqwest::Client;
-use dotenv::dotenv;
-use std::env::var;
-use serde_json::json;
+use reqwest::{Client};
+use crate::handlers::auth_handler::{signup as auth_signup};
 
-pub async fn signup(repository: Data<UserRepository>, request: Json<CreateUserRequest>) -> HttpResponse {
-    dotenv().ok();
+pub async fn signup(repository: Data<UserRepository>, request: Json<CreateUserRequest>) -> HttpResponse {  
+    let client = Client::new();
     
     match repository.create_user(&request).await {
         Ok(user) => {
-            let client = Client::new();
-            
-            let _ = client.post(format!("https://{}.supabase.co/auth/v1/signup", var("SUPABASE_PROJECT_ID").unwrap()))
-                .header("apikey", var("SUPABASE_ANON_KEY").unwrap())
-                .header("Content-Type", "application/json")
-                .json(&json!({
-                    "email": request.email,
-                    "password": request.password,
-                }))
-                .send()
-                .await;
+            auth_signup(&client, &user.email, &request.password).await.ok();
             
             HttpResponse::Created().json(UserResponse {
                 user_id: user.user_id,

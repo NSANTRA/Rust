@@ -27,6 +27,14 @@ pub struct CreateUserRequest {
 
 #[derive(Debug, Serialize, Deserialize)]
 #[allow(dead_code)]
+// User Signup
+pub struct UserLoginRequest {
+    pub email: String,
+    pub password: String,
+}
+
+#[derive(Debug, Serialize, Deserialize)]
+#[allow(dead_code)]
 // Admin User Search
 pub struct SearchUserRequest {
     pub first_name: Option<String>,
