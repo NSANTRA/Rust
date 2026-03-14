@@ -3,6 +3,7 @@ use sqlx::Error;
 #[derive(Debug)]
 pub enum RepositoryError {
     AlreadyExists,
+    DoesNotExist,
     Database(Error),
 }
 
