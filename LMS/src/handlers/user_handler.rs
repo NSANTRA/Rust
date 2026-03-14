@@ -23,6 +23,9 @@ pub async fn signup(repository: Data<UserRepository>, request: Json<CreateUserRe
         Err(RepositoryError::AlreadyExists) => {
             HttpResponse::Conflict().json("User already exists")
         }
+        Err(RepositoryError::DoesNotExist) => {
+            HttpResponse::NotFound().json("User not found")
+        }
         Err(RepositoryError::Database(err)) => {
             HttpResponse::InternalServerError().json(format!("Database error: {}", err.to_string()))
         }
