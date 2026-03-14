@@ -1,0 +1,4 @@
+- Search books by author
+- Search books by genre
+- Update user details
+- Delete user
