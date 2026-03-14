@@ -16,7 +16,7 @@ use actix_web::{
 };
 use handlers::{
     books_handler::{create_book, list_books, delete_book},
-    user_handler::signup,
+    auth_handler::signup,
     auth_handler::signin
 };
 
