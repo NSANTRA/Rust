@@ -19,6 +19,9 @@ pub async fn create_book(repository: Data<BooksRepository>, request: Json<Create
         Err(RepositoryError::AlreadyExists) => {
             HttpResponse::Conflict().json("Book already exists")
         }
+        Err(RepositoryError::DoesNotExist) => {
+            HttpResponse::NotFound().json("Book not found")
+        }        
         Err(RepositoryError::Database(err)) => {
             HttpResponse::InternalServerError().json(format!("Database error: {:?}", err.to_string()))
         }
@@ -32,6 +35,27 @@ pub async fn list_books(repository: Data<BooksRepository>, request: Query<Search
         }
         Err(RepositoryError::AlreadyExists) => {
             HttpResponse::Conflict().json("Book already exists")
+        }
+        Err(RepositoryError::DoesNotExist) => {
+            HttpResponse::NotFound().json("Book not found")
+        }
+        Err(RepositoryError::Database(err)) => {
+            HttpResponse::InternalServerError()
+                .json(format!("Database error: {}", err))
+        }
+    }
+}
+
+pub async fn delete_book(repository: Data<BooksRepository>, request: Query<SearchBookRequest>) -> HttpResponse {
+    match repository.delete_book(&request.into_inner()).await {
+        Ok(book) => {
+            HttpResponse::Ok().json(book)
+        }
+        Err(RepositoryError::AlreadyExists) => {
+            HttpResponse::Conflict().json("Book already exists")
+        }
+        Err(RepositoryError::DoesNotExist) => {
+            HttpResponse::NotFound().json("Book not found")
         }
         Err(RepositoryError::Database(err)) => {
             HttpResponse::InternalServerError()

@@ -15,7 +15,7 @@ use actix_web::{
     web::{Data, get, post},
 };
 use handlers::{
-    books_handler::{create_book, list_books},
+    books_handler::{create_book, list_books, delete_book},
     user_handler::signup,
     auth_handler::signin
 };
@@ -45,6 +45,7 @@ async fn main() -> Result<(), std::io::Error> {
             .route("/create-user", post().to(signup))
             .route("/create-book", post().to(create_book))
             .route("/list-books", get().to(list_books))
+            .route("/delete-book", post().to(delete_book))
             .route("/signin", post().to(signin))
     })
     .bind(("127.0.0.1", 8080))?
